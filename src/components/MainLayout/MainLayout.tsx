@@ -7,7 +7,7 @@ import Header from 'components/MainLayout/components/Header';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      &copy; Hamanovich Store {new Date().getFullYear()}.
+      &copy; Dog Store {new Date().getFullYear()}.
     </Typography>
   );
 }
