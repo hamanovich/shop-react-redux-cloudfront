@@ -2,7 +2,7 @@
 
 ## Links:
 
-* [CloudFront URL](https://d38nj7cgtgxks9.cloudfront.net/)
+* [CloudFront URL](https://dzkpl5vlof06w.cloudfront.net/)
 * [S3-website](http://shop-nodejs-sls-epam.s3-website.eu-central-1.amazonaws.com/)
 
 ---
