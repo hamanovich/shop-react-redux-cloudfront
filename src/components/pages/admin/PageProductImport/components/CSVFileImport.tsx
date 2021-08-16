@@ -29,7 +29,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     setFile('');
   };
 
-  const uploadFile = async (e: any) => {
+  const uploadFile = async () => {
     // Get the presigned URL
     const response = await axios({
       method: 'GET',
@@ -47,6 +47,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
     console.log('Result: ', result);
     setFile('');
   };
+  
   return (
     <div className={classes.content}>
       <Typography variant="h6" gutterBottom>
