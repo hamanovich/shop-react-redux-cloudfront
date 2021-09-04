@@ -57,6 +57,9 @@ const Form = (props: FormikProps<FormikValues>) => {
         <Grid item xs={12} sm={4}>
           <Field component={TextField} name="count" label="Count" fullWidth autoComplete="off" required />
         </Grid>
+        <Grid item xs={12}>
+          <Field component={TextField} name="src" label="Image url" fullWidth autoComplete="off" required />
+        </Grid>
         <Grid item container xs={12} justify="space-between">
           <Button color="primary">Cancel</Button>
           <Button type="submit" variant="contained" color="primary" disabled={!dirty || isSubmitting || !isValid}>
@@ -79,7 +82,7 @@ export default function PageProductForm() {
   const onSubmit = (values: FormikValues) => {
     const formattedValues = ProductSchema.cast(values);
     const productToSave = id ? { ...ProductSchema.cast(formattedValues), id } : formattedValues;
-    axios.put(`${API_PATHS.bff}/product`, productToSave).then(() => history.push('/admin/products'));
+    axios.put(`${API_PATHS.bff}/products`, productToSave).then(() => history.push('/admin/products'));
   };
 
   useEffect(() => {
@@ -87,7 +90,7 @@ export default function PageProductForm() {
       setIsLoading(false);
       return;
     }
-    axios.get(`${API_PATHS.bff}/product/${id}`).then((res) => {
+    axios.get(`${API_PATHS.bff}/products/${id}`).then((res) => {
       setProduct(res.data);
       setIsLoading(false);
     });
