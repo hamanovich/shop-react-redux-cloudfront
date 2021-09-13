@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -33,13 +34,30 @@ const useStyles = makeStyles((theme) => ({
 export default function Products() {
   const classes = useStyles();
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    axios.get(`${API_PATHS.product}/products`).then((res) => setProducts(res.data));
+    axios.get(`${API_PATHS.product}/products`).then(({ data }) => {
+      if (data.statusCode === 404) {
+        setProducts([]);
+      } else {
+        setProducts(data);
+      }
+      setLoading(false);
+    });
   }, []);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
 
   return (
     <Grid container spacing={4}>
+      {products.length === 0 && (
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <h2>No dogs found</h2>
+        </Grid>
+      )}
       {products.map((product: Product) => (
         <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
           <Card className={classes.card}>
