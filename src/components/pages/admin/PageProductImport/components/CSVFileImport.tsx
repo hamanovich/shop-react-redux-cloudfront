@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
+
+const AUTH_TOKEN_KEY = 'authToken';
+const AUTH_TOKEN_VALUE = 'aGFtYW5vdmljaDpURVNUX1BBU1NXT1JE';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -17,6 +20,10 @@ type CSVFileImportProps = {
 export default function CSVFileImport({ url, title }: CSVFileImportProps) {
   const classes = useStyles();
   const [file, setFile] = useState<any>();
+
+  useEffect(() => {
+    localStorage.setItem(AUTH_TOKEN_KEY, AUTH_TOKEN_VALUE);
+  }, []);
 
   const onFileChange = (e: any) => {
     let files = e.target.files || e.dataTransfer.files;
@@ -34,6 +41,9 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
       url,
       params: {
         name: encodeURIComponent(file.name),
+      },
+      headers: {
+        Authorization: `Basic ${localStorage.getItem(AUTH_TOKEN_KEY) || AUTH_TOKEN_KEY}`,
       },
     });
     await fetch(response.data, {

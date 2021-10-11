@@ -11,6 +11,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 
+const STATUS_ERROR_CODES = [401, 401, 403];
+
 const customTheme = createMuiTheme({
   palette: {
     primary: {
@@ -27,8 +29,8 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (error?.response?.status === 400) {
-      alert(error.response.data?.data);
+    if (STATUS_ERROR_CODES.includes(error?.response?.status)) {
+      alert(error.response.data.message || error.response.data.Message);
     }
 
     return Promise.reject(error?.response ?? error);
